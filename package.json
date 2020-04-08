@@ -1,0 +1,21 @@
+{
+  "name": "theater",
+  "version": "1.0.0",
+  "description": "A media library",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/electron/theater",
+  "keywords": [
+    "Electron",
+    "media"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^7.0.0",
+    "electron-packager": "^14.2.1"
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,1 @@
+electron-packager D:\Programs\Electron\Theater Theater --platform=win32 --arch=x64
