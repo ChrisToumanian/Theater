@@ -14,18 +14,24 @@ ipc.on('opened-file', function(event, arg){
 })
 
 function getVideos() {
-    document.getElementById('videos').innerHTML = "Videos will go here.";
+    ipc.send('get-videos');
+    //document.getElementById('videos').innerHTML = "Videos will go here.";
 }
 
-function displayVideos() {
+ipc.on('videos-received', function(event, arg) {
+    displayVideos(arg);
+})
+
+function displayVideos(videos) {
 
     for (i = 0; i < videos.length; i++) {
-        thumb = "/thumbs/" + videos[i].name + ".jpg";
+        console.log(videos[i]);
+        /* thumb = "/thumbs/" + videos[i].name + ".jpg";
         document.getElementById('videos').innerHTML +=  
             "<div class='video-box' onclick='vlc(\"play\", \"" + videos[i].filename + "\")\'>"
                 + "<div class='video-thumb' style=\"background-image: url(\'" + thumb + "\');\">"
             + "</div>"
-            + videos[i].name + "</div>";
+            + videos[i].name + "</div>"; */
     }
 
 }

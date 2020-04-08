@@ -8,6 +8,9 @@ const ipc = electron.ipcMain;
 const path = require('path');
 const fs = require('fs');
 
+// Variables
+const videoDirectory = "/Users/chris/Downloads/";
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -87,4 +90,8 @@ ipc.on('openFile', function(event){
     //console.log(fileContent);
 
     event.sender.send('opened-file', fileContent);
+});
+
+ipc.on('get-videos', function(event){
+	
 });
