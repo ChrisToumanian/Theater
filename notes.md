@@ -35,10 +35,9 @@ npm install electron-packager --save-dev
 npm install electron-packager -g
 
 electron-packager <sourcedir> <appname> --platform=win32 --arch=x86_64
-
 electron-packager D:\Programs\Electron\Theater Theater --platform=win32 --arch=x64
-
 electron-packager /Users/chris/Documents/programs/Electron/Theater Theater --platform=win32 --arch=x64
+electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds
 
 # Chrome Developer's Bar
 ctrl-shift-i
