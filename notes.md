@@ -38,6 +38,7 @@ electron-packager <sourcedir> <appname> --platform=win32 --arch=x86_64
 
 electron-packager D:\Programs\Electron\Theater Theater --platform=win32 --arch=x64
 
+electron-packager /Users/chris/Documents/programs/Electron/Theater Theater --platform=win32 --arch=x64
 
 # Chrome Developer's Bar
 ctrl-shift-i
