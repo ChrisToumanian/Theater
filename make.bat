@@ -1,1 +1,1 @@
-electron-packager D:\Programs\Electron\Theater Theater --platform=win32 --arch=x64
+electron-packager D:\Programs\Electron\Theater Theater --platform=win32 --arch=x64 --icon=images/theater.ico --overwrite

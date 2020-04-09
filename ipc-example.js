@@ -21,3 +21,14 @@ testBtn.addEventListener('click', function(){
 ipc.on('opened-error-dialog', function(event, arg){
     console.log(arg);
 })
+
+
+// button in index.html
+<button id="testBtn">Open File</button>
+
+// listener in index.js
+const testBtn = document.getElementById('testBtn');
+testBtn.addEventListener('click', function(){
+    ipc.send('openFile');
+    ipc.send('open-error-dialog', 'Renderer asked main dialogue to open an error message');
+})

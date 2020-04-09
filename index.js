@@ -3,37 +3,35 @@ const ipc = electron.ipcRenderer;
 
 var videos = [];
 
-const testBtn = document.getElementById('testBtn');
-testBtn.addEventListener('click', function(){
-    ipc.send('openFile');
-    ipc.send('open-error-dialog', 'Renderer asked main dialogue to open an error message');
-})
-
 ipc.on('opened-file', function(event, arg){
     console.log(arg);
 })
 
 function getVideos() {
     ipc.send('get-videos');
-    //document.getElementById('videos').innerHTML = "Videos will go here.";
+}
+
+function runFile(filepath) {
+    ipc.send('run-file', filepath);
 }
 
 ipc.on('videos-received', function(event, arg) {
-    displayVideos(arg);
-})
-
-function displayVideos(videos) {
+    videos = arg;
 
     for (i = 0; i < videos.length; i++) {
-        console.log(videos[i]);
-        /* thumb = "/thumbs/" + videos[i].name + ".jpg";
+
+        var slash = videos[i].lastIndexOf('/') + 1;
+        name = videos[i].substr(slash, videos[i].length - slash);
+        name = name.substr(0, name.lastIndexOf('.'));
+
+        thumb = "./thumbs/" + name + ".jpg";
+        
         document.getElementById('videos').innerHTML +=  
-            "<div class='video-box' onclick='vlc(\"play\", \"" + videos[i].filename + "\")\'>"
+            "<div class='video-box' onclick='runFile(\"" + videos[i] + "\")\' style=\"background-image: url(\'./images/TheaterPlaceholder.png\');\" >"
                 + "<div class='video-thumb' style=\"background-image: url(\'" + thumb + "\');\">"
             + "</div>"
-            + videos[i].name + "</div>"; */
+            + name + "</div>";
     }
-
-}
+})
 
 getVideos();

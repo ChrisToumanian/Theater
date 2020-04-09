@@ -9,7 +9,9 @@ const path = require('path');
 const fs = require('fs');
 
 // Variables
-const videoDirectory = "/Users/chris/Downloads/";
+const videoDirectory = "D:\\Videos\\";
+var videos = [];
+var videoFileFormats = [".mov", ".avi", ".mkv"];
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -18,7 +20,7 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 1400,
+    width: 1229,
     height: 900,
     //frame: false,
     icon: __dirname + './images/theater.ico',
@@ -92,6 +94,47 @@ ipc.on('openFile', function(event){
     event.sender.send('opened-file', fileContent);
 });
 
-ipc.on('get-videos', function(event){
-	
+function addFileToVideosList(filepath)
+{
+    filepath = filepath.replace(/\\/g, '/');
+    for (i = 0; i < videoFileFormats.length; i++) {
+        if (filepath.endsWith(videoFileFormats[i])) {
+            videos.push(filepath);
+        }
+    }
+}
+
+function searchVideoDirectory(dir) {
+    fs.readdirSync(dir).forEach(file => {
+        let fullPath = path.join(dir, file);
+        if (fs.lstatSync(fullPath).isDirectory()) {
+            addFileToVideosList(fullPath);
+            searchVideoDirectory(fullPath);
+        } else {
+            addFileToVideosList(fullPath);
+        }  
+    });
+  }
+
+ipc.on('get-videos', function(event) {
+    searchVideoDirectory(videoDirectory);
+    event.sender.send('videos-received', videos);
+});
+
+ipc.on('run-file', function(event, filepath) {
+    command = "\"" + filepath + "\"";
+    console.log(command);
+
+    // execute shell command
+    exec(command, (error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    });
 });
