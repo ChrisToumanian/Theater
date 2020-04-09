@@ -12,7 +12,7 @@ const open = require('open');
 // Variables
 var videoDirectory = "";
 var videos = [];
-var videoFileFormats = [".mov", ".avi", ".mkv"];
+var videoFileFormats = [".mov", ".avi", ".mkv", ".mp2", ".wmv", ".mp4", ".mpg", ".ogg"];
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
