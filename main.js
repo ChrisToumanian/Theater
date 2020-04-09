@@ -7,6 +7,7 @@ const dialog = electron.dialog;
 const ipc = electron.ipcMain;
 const path = require('path');
 const fs = require('fs');
+const open = require('open');
 
 // Variables
 const videoDirectory = "D:\\Videos\\";
@@ -122,19 +123,9 @@ ipc.on('get-videos', function(event) {
 });
 
 ipc.on('run-file', function(event, filepath) {
-    command = "\"" + filepath + "\"";
-    console.log(command);
-
-    // execute shell command
-    exec(command, (error, stdout, stderr) => {
-        if (error) {
-            console.log(`error: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            console.log(`stderr: ${stderr}`);
-            return;
-        }
-        console.log(`stdout: ${stdout}`);
-    });
+    command = "\"\"" + filepath + "\"\"";
+    // requires "npm install open"
+    (async () => {
+        await open(command);
+    })();
 });

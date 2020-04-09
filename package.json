@@ -17,5 +17,7 @@
     "electron": "^7.0.0",
     "electron-packager": "^14.2.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "open": "^7.0.3"
+  }
 }
