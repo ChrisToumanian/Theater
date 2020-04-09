@@ -10,7 +10,7 @@ const fs = require('fs');
 const open = require('open');
 
 // Variables
-const videoDirectory = "D:\\Videos\\";
+var videoDirectory = "";
 var videos = [];
 var videoFileFormats = [".mov", ".avi", ".mkv"];
 
@@ -76,6 +76,19 @@ ipc.on('open-error-dialog', function(event, message){
     dialog.showErrorBox('Error', message);
 });
 
+// read settings
+function readSettings()
+{
+    var fs = require('fs');
+
+    fs.readFile('settings.txt', 'utf8', function(err, data) {
+        if (err) throw err;
+        console.log(data);
+        videoDirectory = data;
+    });
+}
+readSettings();
+
 // open file
 ipc.on('openFile', function(event){
     // opens file dialogue looking for markdown
@@ -115,7 +128,7 @@ function searchVideoDirectory(dir) {
             addFileToVideosList(fullPath);
         }  
     });
-  }
+}
 
 ipc.on('get-videos', function(event) {
     searchVideoDirectory(videoDirectory);
