@@ -1,7 +1,25 @@
 const electron = require("electron");
+const remote = electron.remote;
 const ipc = electron.ipcRenderer;
 
 var videos = [];
+
+document.getElementById('minimize-button').addEventListener('click', () => {
+    remote.getCurrentWindow().minimize();
+});
+
+document.getElementById('maximize-button').addEventListener('click', () => {
+    const currentWindow = remote.getCurrentWindow();
+    if (currentWindow.isMaximized()) {
+        currentWindow.unmaximize();
+    } else {
+        currentWindow.maximize();
+    }
+});
+
+document.getElementById('close-button').addEventListener('click', () => {
+    remote.app.quit();
+});
 
 ipc.on('opened-file', function(event, arg){
     console.log(arg);
@@ -17,21 +35,19 @@ function runFile(filepath) {
 
 ipc.on('videos-received', function(event, arg) {
     videos = arg;
+    videos.sort();
 
     for (i = 0; i < videos.length; i++) {
-
-        var slash = videos[i].lastIndexOf('/') + 1;
-        name = videos[i].substr(slash, videos[i].length - slash);
-        name = name.substr(0, name.lastIndexOf('.'));
-
-        thumb = "./thumbs/" + name + ".jpg";
+        thumb = "./thumbs/" + videos[i][0] + ".jpg";
         
         document.getElementById('videos').innerHTML +=  
-            "<div class='video-box' onclick='runFile(\"" + videos[i] + "\")\' style=\"background-image: url(\'./images/TheaterPlaceholder.png\');\" >"
+            "<div class='video-box' onclick='runFile(\"" + videos[i][1] + "\")\' style=\"background-image: url(\'./images/TheaterPlaceholder.png\');\" >"
                 + "<div class='video-thumb' style=\"background-image: url(\'" + thumb + "\');\">"
             + "</div>"
-            + name + "</div>";
+            + videos[i][0] + "</div>";
     }
+
+    document.getElementById('videos').innerHTML += "<br>";
 })
 
 getVideos();

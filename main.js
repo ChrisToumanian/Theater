@@ -11,8 +11,12 @@ const open = require('open');
 
 // Variables
 var videoDirectory = "";
+var videoFileFormats = [".mov", ".avi", ".mkv", ".mp2", ".wmv", ".mp4", ".mpg", ".ogg", ".m4v"];
 var videos = [];
-var videoFileFormats = [".mov", ".avi", ".mkv", ".mp2", ".wmv", ".mp4", ".mpg", ".ogg"];
+var video = {
+    "name" : "",
+    "filepath" : ""
+};
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -21,9 +25,9 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 1229,
+    width: 1201,
     height: 900,
-    //frame: false,
+    frame: false,
     icon: __dirname + './images/theater.ico',
     webPreferences: {
         nodeIntegration: true,
@@ -113,7 +117,11 @@ function addFileToVideosList(filepath)
     filepath = filepath.replace(/\\/g, '/');
     for (i = 0; i < videoFileFormats.length; i++) {
         if (filepath.endsWith(videoFileFormats[i])) {
-            videos.push(filepath);
+            //videos.push(filepath);
+            var slash = filepath.lastIndexOf('/') + 1;
+            name = filepath.substr(slash, filepath.length - slash);
+            name = name.substr(0, name.lastIndexOf('.'));
+            videos.push([name, filepath]);
         }
     }
 }

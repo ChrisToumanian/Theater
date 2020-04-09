@@ -1,5 +1,7 @@
 .videos {
-    display: block;
+    overflow: auto;
+    padding: 12px;
+    height: calc(100vh - 57px);
 }
 
 .video-box {
